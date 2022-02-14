@@ -1,13 +1,28 @@
-import './App.css';
+import React from 'react';
+import { Route, Routes, Link } from 'react-router-dom';
+import Home from './components/Home';
+import AddMeal from './components/AddMeal';
+import AddIngredient from './components/AddIngredient';
+import Ingredients from './components/Ingredients';
+import Meals from './components/Meals'
+import ModifyMeal from './components/ModifyMeal'
+import ModifyIngredient from './components/ModifyIngredient';
+import DrawerTemp from './components/DrawerTemp';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          main page for admins
-        </p>
-      </header>
+    <div>
+      <DrawerTemp />
+      
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/meals' element={<Meals />}/>
+        <Route path='/ingredients' element={<Ingredients />}/>
+        <Route path='/add-meal' element={<AddMeal />}/>
+        <Route path='/add-ingredients' element={<AddIngredient />}/>
+        <Route path='/modify-meal' element={<ModifyMeal />} />
+        <Route path='/modify-ingredient' element={<ModifyIngredient />} />
+      </Routes>
     </div>
   );
 }
