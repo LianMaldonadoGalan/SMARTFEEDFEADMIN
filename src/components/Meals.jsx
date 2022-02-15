@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Table from './Table';
+import Table from './TableMeals';
 import { useNavigate } from "react-router-dom";
 import smartFeed from '../api/smartFeed'
 import axios from "axios";
@@ -9,36 +9,40 @@ const Meals = () => {
 
     const columns = [
         {
+            name: "Id",
+            selector: (row) => row.id_meal
+        },
+        {
             name: "Nombre",
-            selector: (row) => row.title
+            selector: (row) => row.meal_name
         },
         {
             name: "Descripción",
-            selector: (row) => row.description
+            selector: (row) => row.meal_description
         },
         {
             name: "Tipo",
-            selector: (row) => row.tipo
+            selector: (row) => row.meal_type
         },
         {
             name: "Costo",
-            selector: (row) => row.costo
+            selector: (row) => row.meal_cost
         },
         {
             name: "Proteínas",
-            selector: (row) => row.proteinas
+            selector: (row) => row.meal_protein
         },
         {
             name: "Calorias",
-            selector: (row) => row.calorias
+            selector: (row) => row.meal_calories
         },
         {
             name: "Carbohidratos",
-            selector: (row) => row.carbohidratos
+            selector: (row) => row.meal_carbohydrates
         },
         {
             name: "Grasas",
-            selector: (row) => row.grasas
+            selector: (row) => row.meal_fats
         },
         {		
             cell: () => <button 
@@ -52,30 +56,12 @@ const Meals = () => {
             button: true,
         },
     ];
-    const [data, setData] = useState([]);
 
-    const getData = () => {
-        try {
-            fetch('0.0.0.0:3001/health')
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                });
-        } catch (error) {
-            alert(error);
-        }
-    }
-
-   /* useEffect(() => {
-        getData();
-    }, []);
-    */
+    
     return (
         <>
-        <button onClick={getData}>hgjhoj</button>
         <Table 
             titleTable='Platillos' 
-            data={data} 
             columns={columns}
             addNewRoute='/add-meal'
             addNewText='Añadir platillo'

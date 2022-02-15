@@ -1,9 +1,9 @@
 import DataTable from "react-data-table-component";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import differenceBy from 'lodash/differenceBy';
-
+import { Context as IngredientContext } from "../context/IngredientContext";
 
 const TextField = styled.input`
   height: 32px;
@@ -19,7 +19,7 @@ const TextField = styled.input`
   &:hover {
     cursor: pointer;
   }
-`;
+`
 
 const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewText }) => (
   <>
@@ -39,19 +39,23 @@ const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewTex
 );
 //() => window.alert(data.map(t => t.title))
 
-export default function Table({titleTable, data, columns, addNewRoute, addNewText}) {
+export default function Table({titleTable, columns, addNewRoute, addNewText}) {
     const [selectedRows, setSelectedRows] = useState([]);
     const [filterText, setFilterText] = useState("");
     const [resetPaginationToggle, setResetPaginationToggle] = useState(
         false
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
-  	const [tableData, setTabledata] = React.useState(data);
 
+    const { state, fetchIngredients } = useContext(IngredientContext);
+    
+    useEffect(() => {
+        fetchIngredients();
+    }, []);
 
-    const filteredItems = tableData.filter(
+    const filteredItems = state.filter(
         (item) =>
-        item.title && item.title.toLowerCase().includes(filterText.toLowerCase())
+        item.ingredient_name && item.ingredient_name.toLowerCase().includes(filterText.toLowerCase())
     );
 
     const subHeaderComponentMemo = React.useMemo(() => {
@@ -78,20 +82,20 @@ export default function Table({titleTable, data, columns, addNewRoute, addNewTex
     };
 
     const contextActions = React.useMemo(() => {
-		const handleDelete = () => {
-			
-			if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.title)}?`)) {
-				setToggleCleared(!toggleCleared);
-				setTabledata(differenceBy(tableData, selectedRows, 'title'));
-			}
-		};
+      const handleDelete = () => {
+        
+        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.title)}?`)) {
+          setToggleCleared(!toggleCleared);
+          //setTabledata(differenceBy(tableData, selectedRows, 'title'));
+        }
+      };
 
-		return (
-			<butto key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>
-				Delete
-			</butto>
-		);
-	}, [data, selectedRows, toggleCleared]);
+      return (
+        <button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>
+          Delete
+        </button>
+      );
+	}, [state, selectedRows, toggleCleared]);
 
     return (
         <div>
