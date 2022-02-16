@@ -1,9 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 import TableIngredientsSelect from './TableIngredientsSelect'
 import { useNavigate } from "react-router-dom"
 
 const AddMeal = () => {
     let navigate = useNavigate();
+    const [ nombre, setNombre ] = useState("");
+    const [ descrp, setDescrp ] = useState("");
+    const [ tipo, setTipo ] = useState("");
+    const [ costo, setCosto ] = useState(0);
+    const [ proteinas, setProteinas ] = useState(0);
+    const [ calorias, setCalorias ] = useState(0);
+    const [ carbohi, setCarbohi ] = useState(0);
+    const [ grasas, setGrasas ] = useState(0);
+    const [ imagen, setImagen ] = useState("");
     
     return(
         <main>

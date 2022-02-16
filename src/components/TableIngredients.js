@@ -2,7 +2,7 @@ import DataTable from "react-data-table-component";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import differenceBy from 'lodash/differenceBy';
+import { useNavigate } from 'react-router-dom'
 import { Context as IngredientContext } from "../context/IngredientContext";
 
 const TextField = styled.input`
@@ -39,15 +39,39 @@ const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewTex
 );
 //() => window.alert(data.map(t => t.title))
 
-export default function Table({titleTable, columns, addNewRoute, addNewText}) {
+export default function Table({titleTable, addNewRoute, addNewText}) {
     const [selectedRows, setSelectedRows] = useState([]);
     const [filterText, setFilterText] = useState("");
     const [resetPaginationToggle, setResetPaginationToggle] = useState(
         false
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
-
     const { state, fetchIngredients } = useContext(IngredientContext);
+
+    let nav = useNavigate()
+
+    //Definición de columnas
+    const columns = [
+        {
+            name: "Id",
+            selector: (row) => row.ingredient_id
+          },
+        {
+          name: "Nombre",
+          selector: (row) => row.ingredient_name
+        },
+        {		
+            cell: (row) => <button 
+                    onClick={() => nav('/modify-ingredient/'+row.ingredient_id)}
+                    className='btn btn-dark'
+                >
+                    Modificar
+                </button>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];   
     
     useEffect(() => {
         fetchIngredients();

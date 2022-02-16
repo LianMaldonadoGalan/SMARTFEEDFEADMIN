@@ -2,7 +2,7 @@ import DataTable from "react-data-table-component";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import differenceBy from 'lodash/differenceBy';
+import { useNavigate } from "react-router-dom";
 import { Context as MealContext } from "../context/MealContext";
 
 const TextField = styled.input`
@@ -39,7 +39,7 @@ const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewTex
 );
 //() => window.alert(data.map(t => t.title))
 
-export default function Table({titleTable, columns, data, addNewRoute, addNewText}) {
+export default function Table({titleTable, addNewRoute, addNewText}) {
     const [selectedRows, setSelectedRows] = useState([]);
     const [filterText, setFilterText] = useState("");
     const [resetPaginationToggle, setResetPaginationToggle] = useState(
@@ -48,6 +48,57 @@ export default function Table({titleTable, columns, data, addNewRoute, addNewTex
     const [toggleCleared, setToggleCleared] = React.useState(false);
 
     const { state, fetchMeals } = useContext(MealContext);
+    let nav = useNavigate()
+
+    const columns = [
+        {
+            name: "Id",
+            selector: (row) => row.id_meal
+        },
+        {
+            name: "Nombre",
+            selector: (row) => row.meal_name
+        },
+        {
+            name: "Descripción",
+            selector: (row) => row.meal_description
+        },
+        {
+            name: "Tipo",
+            selector: (row) => row.meal_type
+        },
+        {
+            name: "Costo",
+            selector: (row) => row.meal_cost
+        },
+        {
+            name: "Proteínas",
+            selector: (row) => row.meal_protein
+        },
+        {
+            name: "Calorias",
+            selector: (row) => row.meal_calories
+        },
+        {
+            name: "Carbohidratos",
+            selector: (row) => row.meal_carbohydrates
+        },
+        {
+            name: "Grasas",
+            selector: (row) => row.meal_fats
+        },
+        {		
+            cell: (row) => <button 
+                    onClick={() => nav('/modify-meal/'+row.id_meal)}
+                    className='btn btn-dark'
+                >
+                    Modificar
+                </button>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];
     
     useEffect(() => {
       fetchMeals();

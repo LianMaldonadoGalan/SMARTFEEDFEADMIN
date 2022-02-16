@@ -23,8 +23,8 @@ function App() {
           <Route path='/ingredients' element={<Ingredients />}/>
           <Route path='/add-meal' element={<AddMeal />}/>
           <Route path='/add-ingredients' element={<AddIngredient />}/>
-          <Route path='/modify-meal' element={<ModifyMeal />} />
-          <Route path='/modify-ingredient' element={<ModifyIngredient />} />
+          <Route path='/modify-meal/:id' element={<ModifyMeal />} />
+          <Route path='/modify-ingredient/:id' element={<ModifyIngredient />} />
         </Routes>
       </MealProvider>
     </IngredientProvider>
