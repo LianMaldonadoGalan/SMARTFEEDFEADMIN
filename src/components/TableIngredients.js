@@ -20,7 +20,6 @@ const TextField = styled.input`
     cursor: pointer;
   }
 `
-
 const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewText }) => (
   <>
     <TextField
@@ -37,7 +36,9 @@ const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewTex
     <Link to={addNewRoute} className='btn btn-dark'>{addNewText}</Link>
   </>
 );
+
 //() => window.alert(data.map(t => t.title))
+
 
 export default function Table({titleTable, addNewRoute, addNewText}) {
     const [selectedRows, setSelectedRows] = useState([]);
@@ -46,7 +47,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         false
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
-    const { state, fetchIngredients } = useContext(IngredientContext);
+    const { state, fetchIngredients, deleteIngredient } = useContext(IngredientContext);
 
     let nav = useNavigate()
 
@@ -75,7 +76,10 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     
     useEffect(() => {
         fetchIngredients();
+        
     }, []);
+
+    console.log(state)
 
     const filteredItems = state.filter(
         (item) =>
@@ -91,13 +95,19 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         };
 
         return (    
+          <>
             <FilterComponent
-                onFilter={(e) => setFilterText(e.target.value)}
-                onClear={handleClear}
-                filterText={filterText}
-                addNewRoute={addNewRoute}
-                addNewText={addNewText}
+              onFilter={(e) => setFilterText(e.target.value)}
+              onClear={handleClear}
+              filterText={filterText}
+              addNewRoute={addNewRoute}
+              addNewText={addNewText}
             />  
+            <button type="button" onClick={fetchIngredients} className='btn btn-dark'>
+              Refrescar
+            </button>
+          </>
+            
         );
     }, [filterText, resetPaginationToggle]);
 
@@ -108,9 +118,11 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     const contextActions = React.useMemo(() => {
       const handleDelete = () => {
         
-        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.title)}?`)) {
+        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.ingredient_name)}?`)) {
           setToggleCleared(!toggleCleared);
-          //setTabledata(differenceBy(tableData, selectedRows, 'title'));
+          selectedRows.forEach(i => {
+            deleteIngredient(i.ingredient_id);
+          })
         }
       };
 
@@ -123,25 +135,27 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
 
     return (
         <div>
+          
             <DataTable
-                title={titleTable}
-                columns={columns}
-                data={filteredItems}
-                selectableRows
-                onSelectedRowsChange={handleChange}
-                selectableRowsNoSelectAll
-                clearSelectedRows={toggleCleared}
-                contextActions={contextActions}
-                striped
-                pagination
-                paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                subHeader
-                subHeaderComponent={subHeaderComponentMemo}
-                persistTableHead
-                selectableRowsHighlight
-                pointerOnHover
-                highlightOnHover
-            />
+              title={titleTable}
+              columns={columns}
+              data={filteredItems}
+              selectableRows
+              onSelectedRowsChange={handleChange}
+              selectableRowsNoSelectAll
+              clearSelectedRows={toggleCleared}
+              contextActions={contextActions}
+              striped
+              pagination
+              paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+              subHeader
+              subHeaderComponent={subHeaderComponentMemo}
+              persistTableHead
+              selectableRowsHighlight
+              pointerOnHover
+              highlightOnHover
+          />
+          
         </div>
     );
 }

@@ -20,22 +20,21 @@ const TextField = styled.input`
     cursor: pointer;
   }
 `
-
 const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewText }) => (
-  <>
-    <TextField
-      id="search"
-      type="text"
-      placeholder="Filtrar por nombre"
-      aria-label="Search Input"
-      value={filterText}
-      onChange={onFilter}
-    />
-    <button type="button" onClick={onClear} className='btn btn-dark'>
-      Limpiar
-    </button>
-    <Link to={addNewRoute} className='btn btn-dark'>{addNewText}</Link>
-  </>
+    <>
+        <TextField
+            id="search"
+            type="text"
+            placeholder="Filtrar por nombre"
+            aria-label="Search Input"
+            value={filterText}
+            onChange={onFilter}
+        />
+        <button type="button" onClick={onClear} className='btn btn-dark'>
+            Limpiar
+        </button>
+        <Link to={addNewRoute} className='btn btn-dark'>{addNewText}</Link>
+    </>
 );
 //() => window.alert(data.map(t => t.title))
 
@@ -47,7 +46,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
 
-    const { state, fetchMeals } = useContext(MealContext);
+    const { state, fetchMeals, deleteMeal } = useContext(MealContext);
     let nav = useNavigate()
 
     const columns = [
@@ -98,6 +97,17 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
             allowOverflow: true,
             button: true,
         },
+        {		
+            cell: (row) => <button 
+                    onClick={() => nav('/recipe/'+row.id_meal)}
+                    className='btn btn-dark'
+                >
+                    Ver receta
+                </button>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
     ];
     
     useEffect(() => {
@@ -118,13 +128,20 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         };
 
         return (    
-            <FilterComponent
-                onFilter={(e) => setFilterText(e.target.value)}
-                onClear={handleClear}
-                filterText={filterText}
-                addNewRoute={addNewRoute}
-                addNewText={addNewText}
-            />  
+            <>
+                <FilterComponent
+                    onFilter={(e) => setFilterText(e.target.value)}
+                    onClear={handleClear}
+                    filterText={filterText}
+                    addNewRoute={addNewRoute}
+                    addNewText={addNewText}
+                />  
+                <button type="button" onClick={fetchMeals}  className='btn btn-dark'>
+                    Refrescar
+                </button>
+            </>
+            
+            
         );
     }, [filterText, resetPaginationToggle]);
 
@@ -135,9 +152,12 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     const contextActions = React.useMemo(() => {
       const handleDelete = () => {
         
-        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.title)}?`)) {
+        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.meal_name)}?`)) {
           setToggleCleared(!toggleCleared);
-          //setTabledata(differenceBy(tableData, selectedRows, 'title'));
+          selectedRows.forEach(m => {
+              console.log(m)
+            deleteMeal(m.id_meal);
+          })
         }
       };
 

@@ -6,7 +6,6 @@ const ingredientReducer = (state, action) => {
         case 'fetch_ingredients':
             return action.payload;
         case 'get-ingredient':
-            console.log('si entra')
             return action.payload;
         default:
             return state;
@@ -25,13 +24,16 @@ const getIngredient = dispatch => async (id) => {
 }
 
 const createIngredient = dispatch => async (name, picture) => {
-    console.log(name+ '   '+ picture)
     await smartFeed.post('/ingredients', {name, picture});
+}
+
+const deleteIngredient = dispatch => async (id) => {
+    await smartFeed.delete('/ingredients/'+id);
+    //dispatch({ type: 'del-ingredient', payload: response})
 }
   
 export const { Provider, Context } = createDataContext(
   ingredientReducer,
-  { fetchIngredients, createIngredient, getIngredient },
+  { fetchIngredients, createIngredient, getIngredient, deleteIngredient },
   []
 );
-  
