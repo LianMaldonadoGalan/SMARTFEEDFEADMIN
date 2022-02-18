@@ -1,6 +1,7 @@
 import DataTable from "react-data-table-component";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { Context as SelectedIng } from "../context/SelectedIngContext";
 
 
 const TextField = styled.input`
@@ -100,6 +101,7 @@ export default function TableIngredientsSelect({titleTable}) {
     const [resetPaginationToggle, setResetPaginationToggle] = useState(
         false
     );
+    const { state, putIngredients, fetchIngredients } = useContext(SelectedIng);
 
 
     const filteredItems = data.filter(
@@ -125,7 +127,7 @@ export default function TableIngredientsSelect({titleTable}) {
     }, [filterText, resetPaginationToggle]);
 
     const handleChange = ({ selectedRows }) => {
-        setSelectedRows(selectedRows);
+        putIngredients(selectedRows);
     };
 
     return (
@@ -153,12 +155,10 @@ export default function TableIngredientsSelect({titleTable}) {
                         noTableHead
                         highlightOnHover
                     />
-                </div>
-                <div className="col">
                 <DataTable
                         title='Ingredientes seleccionados'
                         columns={columns}
-                        data={selectedRows}
+                        data={state}
                         striped
                         pagination
                         paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1

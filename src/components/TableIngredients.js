@@ -118,7 +118,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     const contextActions = React.useMemo(() => {
       const handleDelete = () => {
         
-        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.ingredient_name)}?`)) {
+        if (window.confirm(`¿Estas seguro que deseas eliminar:\r ${selectedRows.map(r => r.ingredient_name)}?`)) {
           setToggleCleared(!toggleCleared);
           selectedRows.forEach(i => {
             deleteIngredient(i.ingredient_id);

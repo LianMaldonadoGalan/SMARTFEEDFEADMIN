@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react"
-import TableIngredientsSelect from './TableIngredientsSelect'
 import { useNavigate } from "react-router-dom"
 import { Context as MealContext } from "../context/MealContext"
 

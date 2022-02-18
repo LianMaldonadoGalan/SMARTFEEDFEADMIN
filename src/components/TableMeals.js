@@ -99,7 +99,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         },
         {		
             cell: (row) => <button 
-                    onClick={() => nav('/recipe/'+row.id_meal)}
+                    onClick={() => nav('/recipe/'+row.id_meal+'/'+row.meal_name)}
                     className='btn btn-dark'
                 >
                     Ver receta
@@ -152,7 +152,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     const contextActions = React.useMemo(() => {
       const handleDelete = () => {
         
-        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.meal_name)}?`)) {
+        if (window.confirm(`¿Estas seguro que deseas eliminar:\r ${selectedRows.map(r => r.meal_name)}?`)) {
           setToggleCleared(!toggleCleared);
           selectedRows.forEach(m => {
               console.log(m)
