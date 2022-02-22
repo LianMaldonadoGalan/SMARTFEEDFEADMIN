@@ -47,7 +47,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         false
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
-    const { state, fetchIngredients, deleteIngredient } = useContext(IngredientContext);
+    const { state: ingredients, fetchIngredients, deleteIngredient } = useContext(IngredientContext);
 
     let nav = useNavigate()
 
@@ -79,9 +79,9 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         
     }, []);
 
-    console.log(state)
+    console.log(ingredients)
 
-    const filteredItems = state.filter(
+    const filteredItems = ingredients.filter(
         (item) =>
         item.ingredient_name && item.ingredient_name.toLowerCase().includes(filterText.toLowerCase())
     );
@@ -131,7 +131,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
           Delete
         </button>
       );
-	}, [state, selectedRows, toggleCleared]);
+	}, [ingredients, selectedRows, toggleCleared]);
 
     return (
         <div>

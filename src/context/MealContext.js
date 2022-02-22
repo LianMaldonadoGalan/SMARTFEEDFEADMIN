@@ -31,8 +31,12 @@ const deleteMeal = dispatch => async (id) => {
     //dispatch({ type: 'del-ingredient', payload: response})
 }
 
+const patchMeal = dispatch => async (id, name, photo, description, type, cost, protein, calories, carbohydrates, fats) => {
+    await smartFeed.patch('meals/'+id, {name, photo, description, type, cost, protein, calories, carbohydrates, fats});
+}
+
 export const { Provider, Context } = createDataContext(
   mealReducer,
-  { fetchMeals, getMeal, createMeal, deleteMeal },
+  { fetchMeals, getMeal, createMeal, deleteMeal, patchMeal },
   []
 );

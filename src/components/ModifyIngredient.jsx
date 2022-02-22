@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import smartFeed from '../api/smartFeed'
 
 const ModifyIngredient = () => {
-    const { state, getIngredient } = useContext(IngredientContext);
+    const { state, getIngredient, patchIngredient } = useContext(IngredientContext);
     const [ nombre, setNombre ] = useState("");
     const [ imagen, setImagen ] = useState("");
     let params = useParams();
@@ -49,6 +49,7 @@ const ModifyIngredient = () => {
                                 <button onClick={() => {
                                     const confirmacion = window.confirm('Seguro que quieres modificarlo?  ' + nombre);
                                     if(confirmacion){
+                                        patchIngredient(id, nombre, imagen)
                                         nav('/ingredients')
                                     }
                                 }}>Registrar</button>

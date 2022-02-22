@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { Context as MealContext } from "../context/MealContext";
 
 const ModifyMeal = () => {
-    const { state, getMeal } = useContext(MealContext);
+    const { state, getMeal, patchMeal } = useContext(MealContext);
     let params = useParams();
     let nav = useNavigate();
     const id = params.id;
@@ -25,9 +25,9 @@ const ModifyMeal = () => {
     useEffect(() => {
         getMeal(id);
         
-        setNombre(meal.id_meal);
-        setDescrp(meal.meal_name);
-        setTipo(meal.meal_description);
+        setNombre(meal.meal_name);
+        setDescrp(meal.meal_description);
+        setTipo(meal.meal_type);
         setCosto(meal.meal_cost);
         setProteinas(meal.meal_protein);
         setCalorias(meal.meal_calories);
@@ -125,6 +125,7 @@ const ModifyMeal = () => {
                                     onClick={() => {
                                         const confirmacion = window.confirm('PUTISIMO')
                                         if(confirmacion){
+                                            patchMeal(id, nombre, imagen, descrp, tipo, costo, proteinas, calorias, carbohi, grasas);
                                             nav('/meals')
                                         }
                                 }} style={{width: 150, height:80}}>

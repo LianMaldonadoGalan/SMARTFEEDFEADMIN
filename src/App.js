@@ -11,28 +11,31 @@ import Recipe from './components/Recipe';
 import DrawerTemp from './components/DrawerTemp';
 import { Provider as MealProvider } from './context/MealContext'
 import { Provider as IngredientProvider } from './context/IngredientContext'
-import { Provider as SelectedIng } from './context/SelectedIngContext'
+import { Provider as SelectedIng } from './context/SelectedIngContext';
+import { Provider as RecipeProvider } from './context/RecipeContext'
 
 function App() {
   return (
-    <SelectedIng>
-      <IngredientProvider>
-        <MealProvider>
-          <DrawerTemp />
-          
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/meals' element={<Meals />}/>
-            <Route path='/ingredients' element={<Ingredients />}/>
-            <Route path='/add-meal' element={<AddMeal />}/>
-            <Route path='/add-ingredients' element={<AddIngredient />}/>
-            <Route path='/modify-meal/:id' element={<ModifyMeal />} />
-            <Route path='/modify-ingredient/:id' element={<ModifyIngredient />} />
-            <Route path='/recipe/:id/:nombre' element={<Recipe />} />
-          </Routes>
-        </MealProvider>
-      </IngredientProvider>
-    </SelectedIng>
+    <RecipeProvider>
+      <SelectedIng>
+        <IngredientProvider>
+          <MealProvider>
+            <DrawerTemp />
+            
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/meals' element={<Meals />}/>
+              <Route path='/ingredients' element={<Ingredients />}/>
+              <Route path='/add-meal' element={<AddMeal />}/>
+              <Route path='/add-ingredients' element={<AddIngredient />}/>
+              <Route path='/modify-meal/:id' element={<ModifyMeal />} />
+              <Route path='/modify-ingredient/:id' element={<ModifyIngredient />} />
+              <Route path='/recipe/:id/:nombre' element={<Recipe />} />
+            </Routes>
+          </MealProvider>
+        </IngredientProvider>
+      </SelectedIng>
+    </RecipeProvider>
   );
 }
 
