@@ -76,7 +76,6 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     
     useEffect(() => {
         fetchIngredients();
-        
     }, []);
 
     console.log(ingredients)

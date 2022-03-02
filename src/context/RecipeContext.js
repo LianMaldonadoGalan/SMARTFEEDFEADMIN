@@ -4,7 +4,7 @@ import smartFeed from '../api/smartFeed'
 const recipeReducer = (state, action) => {
     switch (action.type) {
         case 'get-recipe':
-            return action.payload;
+            return state = action.payload;
         default:
             return state;
     }
@@ -12,21 +12,19 @@ const recipeReducer = (state, action) => {
   
 const getRecipe = dispatch => async (id) => {
     const response = await smartFeed.get(`/recipes/meal/`+id);
-    dispatch({ type: 'get-meal', payload: response.data });
+    dispatch({ type: 'get-recipe', payload: response.data });
 }
 
 const createRecipe = dispatch => async (mealIngredients, mealRecipe, mealPrepTime, mealId) => {
-    console.log('holi;')
     await smartFeed.post('/recipes', {mealIngredients, mealRecipe, mealPrepTime, mealId});
 }
 
-const deleteMeal = dispatch => async (id) => {
-    await smartFeed.delete('/meals/'+id);
-    //dispatch({ type: 'del-ingredient', payload: response})
+const updateRecipe = () => async (recipe_id, mealIngredients, mealRecipe, mealPrepTime) => {
+    await smartFeed.patch('recipes/' + recipe_id, {mealIngredients, mealRecipe, mealPrepTime})
 }
 
 export const { Provider, Context } = createDataContext(
   recipeReducer,
-  { getRecipe, createRecipe },
+  { getRecipe, createRecipe, updateRecipe },
   []
 );

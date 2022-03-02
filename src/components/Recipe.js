@@ -1,26 +1,58 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Context as SelectedIng } from "../context/SelectedIngContext";
-import TableIngredientsSelect from "./TableIngredientsSelect";
 import { Context as RecipeContext } from "../context/RecipeContext";
+import { Context as IngredientsContext } from "../context/IngredientContext";
 import { useNavigate } from "react-router-dom";
+import TableIngredientsSelect from "./TableIngredientsSelect";
+import DataTable from "react-data-table-component";
 
 
 const Recipe = () => {
     const params = useParams();
     const id = params.id;
     const nombrePlatillo = params.nombre;
-    const { state: selectedIngredients, reset} = useContext(SelectedIng);
-    const { createRecipe } = useContext(RecipeContext);
+    const { state: selectedIngredients, putIngredients} = useContext(SelectedIng);
+    const { state: stateRecipe, createRecipe, updateRecipe} = useContext(RecipeContext);
+    const { state: stateIngredients } = useContext(IngredientsContext);
     const [pasos, setPasos] = useState("");
     const [tiempo, setTiempo] = useState(0);
     let nav = useNavigate()
     let ingredients;
     let time;
+    let ingredientesReceta = [];
+
+    if(stateRecipe[0] !== undefined){
+        console.log(stateRecipe[0].meal_ingredients); 
+        const x = JSON.parse(stateRecipe[0].meal_ingredients);
+        x.map(b => {
+            ingredientesReceta.push(stateIngredients.find(i => i.ingredient_id === b));
+            console.log(stateRecipe[0])
+            //console.log(ingredientesReceta);
+            //put(stateIngredients.find(i => i.ingredient_id === b));
+        });
+    }
+    
 
     useEffect(() => {
-        reset();
+        console.log('Se entro a la receta');
+        if(stateRecipe[0] !== undefined){
+            setPasos(stateRecipe[0].meal_recipe);
+            setTiempo(stateRecipe[0].meal_prep_time);
+        }
+        
     }, [])
+
+    const columns = [
+        {
+            name: "Id",
+            selector: (row) => row.ingredient_id
+          },
+        {
+            name: "Nombre",
+            selector: (row) => row.ingredient_name
+        }
+    ]; 
 
     return(
         <div className="container-fluid">
@@ -49,16 +81,29 @@ const Recipe = () => {
                             </div>
                             <div className="col" style={{backgroundColor: 'blue'}}>
                                 <div className="row">
-                                    <TableIngredientsSelect />
+                                    <DataTable 
+                                        title='Ingredientes de la receta'
+                                        columns={columns}
+                                        data={ingredientesReceta}
+                                    />
+                                </div>
+                                <div className="row">
+                                    <TableIngredientsSelect titleTable='Nuevos ingredientes'/>
                                 </div>
                                 <div className="row"> 
                                     <div className="d-flex justify-content-center">
                                         <button onClick={() => {
-                                            const confirmacion = window.confirm('Seguro que quieres guardar?  ');
+                                            const confirmacion = window.confirm('Seguro que quieres guardar?  ' + selectedIngredients.map(x=>x.ingredient_id));
                                             if(confirmacion){
-                                                ingredients = JSON.stringify(selectedIngredients.map(a => a.id));
+                                                ingredients = JSON.stringify(selectedIngredients.map(a => a.ingredient_id));
                                                 time = parseInt(tiempo)
-                                                createRecipe(ingredients, pasos, time, id);
+                                                let objeto = {
+                                                    ingredientes: ingredients,
+                                                    tiempo: time,
+                                                    mealRecipe: pasos
+                                                }
+                                                console.log(objeto)
+                                                {stateRecipe[0] !== undefined ? updateRecipe(ingredients, pasos, 'nuevo tiempo'): createRecipe(ingredients, pasos, time, id);}
                                                 nav('/meals');
                                             }
                                         }}>Registrar</button>

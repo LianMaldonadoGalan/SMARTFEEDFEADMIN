@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Context as MealContext } from "../context/MealContext";
+import { Context as RecipeContext } from "../context/RecipeContext";
+import { Context as IngredientContext} from '../context/IngredientContext'
 
 const TextField = styled.input`
   height: 32px;
@@ -36,7 +38,6 @@ const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewTex
         <Link to={addNewRoute} className='btn btn-dark'>{addNewText}</Link>
     </>
 );
-//() => window.alert(data.map(t => t.title))
 
 export default function Table({titleTable, addNewRoute, addNewText}) {
     const [selectedRows, setSelectedRows] = useState([]);
@@ -47,7 +48,14 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     const [toggleCleared, setToggleCleared] = React.useState(false);
 
     const { state, fetchMeals, deleteMeal } = useContext(MealContext);
+    const { getRecipe } = useContext(RecipeContext);
+    const { fetchIngredients } = useContext(IngredientContext);
     let nav = useNavigate()
+    console.log(state.data.find(x => x.id_meal === 271));
+    
+    useEffect(() => {
+      fetchMeals();
+    }, []);
 
     const columns = [
         {
@@ -99,7 +107,11 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         },
         {		
             cell: (row) => <button 
-                    onClick={() => nav('/recipe/'+row.id_meal+'/'+row.meal_name)}
+                    onClick={async() => {
+                        await getRecipe(row.id_meal);
+                        await fetchIngredients();
+                        nav('/recipe/'+row.id_meal+'/'+row.meal_name)
+                    }}
                     className='btn btn-dark'
                 >
                     Ver receta
@@ -109,12 +121,8 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
             button: true,
         },
     ];
-    
-    useEffect(() => {
-      fetchMeals();
-    }, []);
 
-    const filteredItems = state.filter(
+    const filteredItems = state.data.filter(
         (item) =>
         item.meal_name && item.meal_name.toLowerCase().includes(filterText.toLowerCase())
     );
@@ -166,7 +174,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
           Delete
         </button>
       );
-	}, [state, selectedRows, toggleCleared]);
+	}, [state.data, selectedRows, toggleCleared]);
 
     return (
         <div>

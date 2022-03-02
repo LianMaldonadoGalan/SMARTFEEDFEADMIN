@@ -7,6 +7,9 @@ const selectedIng = (state, action) => {
             return [state= []];
         case 'put_ingredients':
             return action.payload;
+        case 'fetch-selected-ing':
+            console.log(state);
+            return state;
         default:
             return state;
     }
@@ -19,9 +22,14 @@ const reset = dispatch => async () => {
 const putIngredients = dispatch => (ingredients) => {
     dispatch({ type: 'put_ingredients', payload: ingredients});
 }
+
+
+const fetchSelectedIng = dispatch => () => {
+    dispatch({ type: 'fetch-selected-ing'});
+}
   
 export const { Provider, Context } = createDataContext(
     selectedIng,
-  { reset, putIngredients },
+  { reset, putIngredients, fetchSelectedIng },
   []
 );

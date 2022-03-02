@@ -1,9 +1,14 @@
-import React from "react";
-import { useParams } from "react-router";
+import React, { useContext, useEffect } from "react";
 import Table from './TableIngredients';
+import { Context as IngredientsContext } from "../context/IngredientContext";
 
 const Ingredients = () => { 
+    const { fetchIngredients } = useContext(IngredientsContext);
 
+    useEffect(() => {
+        fetchIngredients();
+    }, []);
+    
     return (
         <>
             <Table 

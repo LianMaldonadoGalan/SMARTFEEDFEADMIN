@@ -1,8 +1,8 @@
 import DataTable from "react-data-table-component";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Context as SelectedIng } from "../context/SelectedIngContext";
-
+import { Context as IngredientsContext } from "../context/IngredientContext";
 
 const TextField = styled.input`
   height: 32px;
@@ -39,75 +39,27 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 const columns = [
     {
       name: "Nombre",
-      selector: (row) => row.title
-    }
-];
-  
-  const data = [
-    {
-        id: 1,
-        title: "Huevo",
-    },
-    {
-        id: 2,
-        title: "Sal",
-    },
-    {
-        id: 3,
-        title: 'Pimienta'
-    },
-    {
-        id: 4,
-        title: "Carne de res",
-    },
-    {
-        id: 5,
-        title: "etc",
-    },
-    {
-        id: 6,
-        title: 'Busca'
-    },
-    {
-        id: 7,
-        title: "Rick",
-    },
-    {
-        id: 8,
-        title: "Luis",
-    },
-    {
-        id: 9,
-        title: 'Lian'
-    },
-    {
-        id: 10,
-        title: "Huevesito",
-    },
-    {
-        id: 11,
-        title: "Mantequilla",
-    },
-    {
-        id: 12,
-        title: 'Test'
+      selector: (row) => row.ingredient_name
     }
 ];
 
-
-export default function TableIngredientsSelect({titleTable}) {
-    const [selectedRows, setSelectedRows] = useState([]);
+export default function TableIngredientsSelect({titleTable, deReceta}) {
+    //const [selectedRows, setSelectedRows] = useState([]);
     const [filterText, setFilterText] = useState("");
     const [resetPaginationToggle, setResetPaginationToggle] = useState(
         false
     );
-    const { state, putIngredients, fetchIngredients } = useContext(SelectedIng);
+    const { state, putIngredients, fetchSelectedIng } = useContext(SelectedIng);
+    const { state: stateIngredients } = useContext(IngredientsContext);
 
-
-    const filteredItems = data.filter(
-        (item) =>
-        item.title && item.title.toLowerCase().includes(filterText.toLowerCase())
+    const filteredItems = stateIngredients.filter(
+        (item) => 
+        item.ingredient_name && item.ingredient_name.toLowerCase().includes(filterText.toLowerCase())
     );
+
+    useEffect(() => {
+        fetchSelectedIng();
+    }, []);
 
     const subHeaderComponentMemo = React.useMemo(() => {
         const handleClear = () => {
@@ -120,13 +72,14 @@ export default function TableIngredientsSelect({titleTable}) {
         return (    
             <FilterComponent
                 onFilter={(e) => setFilterText(e.target.value)}
-                onClear={handleClear}
+                onClear={fetchSelectedIng}
                 filterText={filterText}
             />  
         );
     }, [filterText, resetPaginationToggle]);
 
     const handleChange = ({ selectedRows }) => {
+        console.log(typeof selectedRows)
         putIngredients(selectedRows);
     };
 
@@ -139,6 +92,7 @@ export default function TableIngredientsSelect({titleTable}) {
                         columns={columns}
                         data={filteredItems}
                         selectableRows
+                        selectableRowSelected={deReceta}
                         onSelectedRowsChange={handleChange}
                         selectableRowsNoSelectAll
                         striped
