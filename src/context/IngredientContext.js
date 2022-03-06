@@ -15,12 +15,12 @@ const ingredientReducer = (state, action) => {
 
 const fetchIngredients = dispatch => async () => {
     const response = await smartFeed.get(`/ingredients`);
-    dispatch({ type: 'fetch_ingredients', payload: response.data });
+    dispatch({ type: 'fetch_ingredients', payload: response.data.data });
   };
 
 const getIngredient = dispatch => async (id) => {
     const response = await smartFeed.get(`/ingredients/`+id);
-    dispatch({ type: 'get-ingredient', payload: response.data });
+    dispatch({ type: 'get-ingredient', payload: response.data.data });
     return response.data;
 }
 

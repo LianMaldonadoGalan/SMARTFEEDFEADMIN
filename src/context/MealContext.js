@@ -14,12 +14,12 @@ const mealReducer = (state, action) => {
 
 const fetchMeals = dispatch => async () => {
     const response = await smartFeed.get('/meals');
-    dispatch({ type: 'fetch_meals', payload: response.data });
+    dispatch({ type: 'fetch_meals', payload: response.data.data });
 };
   
 const getMeal = dispatch => async (id) => {
     const response = await smartFeed.get(`/meals/`+id);
-    dispatch({ type: 'get-meal', payload: response.data });
+    dispatch({ type: 'get-meal', payload: response.data.data });
 }
 
 const createMeal = dispatch => async (name, photo, description, type, cost, protein, calories, carbohydrates, fats) => {

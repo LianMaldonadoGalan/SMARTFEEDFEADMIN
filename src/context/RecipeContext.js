@@ -11,8 +11,8 @@ const recipeReducer = (state, action) => {
 };
   
 const getRecipe = dispatch => async (id) => {
-    const response = await smartFeed.get(`/recipes/meal/`+id);
-    dispatch({ type: 'get-recipe', payload: response.data });
+    const response = await smartFeed.get(`/recipes/meal/${id}`);
+    dispatch({ type: 'get-recipe', payload: response.data.data });
 }
 
 const createRecipe = dispatch => async (mealIngredients, mealRecipe, mealPrepTime, mealId) => {
@@ -20,7 +20,8 @@ const createRecipe = dispatch => async (mealIngredients, mealRecipe, mealPrepTim
 }
 
 const updateRecipe = () => async (recipe_id, mealIngredients, mealRecipe, mealPrepTime) => {
-    await smartFeed.patch('recipes/' + recipe_id, {mealIngredients, mealRecipe, mealPrepTime})
+    const url = `/recipes/${recipe_id}`
+    await smartFeed.patch(url, {mealIngredients, mealRecipe, mealPrepTime})
 }
 
 export const { Provider, Context } = createDataContext(

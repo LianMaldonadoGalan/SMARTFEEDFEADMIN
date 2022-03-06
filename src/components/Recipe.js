@@ -96,14 +96,13 @@ const Recipe = () => {
                                             const confirmacion = window.confirm('Seguro que quieres guardar?  ' + selectedIngredients.map(x=>x.ingredient_id));
                                             if(confirmacion){
                                                 ingredients = JSON.stringify(selectedIngredients.map(a => a.ingredient_id));
-                                                time = parseInt(tiempo)
+                                                time = tiempo
                                                 let objeto = {
                                                     ingredientes: ingredients,
                                                     tiempo: time,
                                                     mealRecipe: pasos
                                                 }
-                                                console.log(objeto)
-                                                {stateRecipe[0] !== undefined ? updateRecipe(ingredients, pasos, 'nuevo tiempo'): createRecipe(ingredients, pasos, time, id);}
+                                                {stateRecipe[0] !== undefined ? updateRecipe(stateRecipe[0].recipe_id, ingredients, pasos, time): createRecipe(ingredients, pasos, time, id);}
                                                 nav('/meals');
                                             }
                                         }}>Registrar</button>

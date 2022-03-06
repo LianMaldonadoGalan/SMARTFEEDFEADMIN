@@ -47,16 +47,15 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
 
-    const { state, fetchMeals, deleteMeal } = useContext(MealContext);
+    const { state: meals, fetchMeals, deleteMeal } = useContext(MealContext);
     const { getRecipe } = useContext(RecipeContext);
     const { fetchIngredients } = useContext(IngredientContext);
     let nav = useNavigate()
-    console.log(state.data.find(x => x.id_meal === 271));
     
     useEffect(() => {
-      fetchMeals();
+        fetchMeals();
     }, []);
-
+    
     const columns = [
         {
             name: "Id",
@@ -122,7 +121,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
         },
     ];
 
-    const filteredItems = state.data.filter(
+    const filteredItems = meals.filter(
         (item) =>
         item.meal_name && item.meal_name.toLowerCase().includes(filterText.toLowerCase())
     );
@@ -174,7 +173,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
           Delete
         </button>
       );
-	}, [state.data, selectedRows, toggleCleared]);
+	}, [meals, selectedRows, toggleCleared]);
 
     return (
         <div>
