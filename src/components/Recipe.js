@@ -22,8 +22,7 @@ const Recipe = () => {
     let time;
     let ingredientesReceta = [];
 
-    if(stateRecipe[0] !== undefined){
-        console.log(stateRecipe[0].meal_ingredients); 
+    if(stateRecipe !== undefined){
         const x = JSON.parse(stateRecipe[0].meal_ingredients);
         x.map(b => {
             ingredientesReceta.push(stateIngredients.find(i => i.ingredient_id === b));
@@ -36,7 +35,7 @@ const Recipe = () => {
 
     useEffect(() => {
         console.log('Se entro a la receta');
-        if(stateRecipe[0] !== undefined){
+        if(stateRecipe !== undefined){
             setPasos(stateRecipe[0].meal_recipe);
             setTiempo(stateRecipe[0].meal_prep_time);
         }
@@ -102,7 +101,7 @@ const Recipe = () => {
                                                     tiempo: time,
                                                     mealRecipe: pasos
                                                 }
-                                                {stateRecipe[0] !== undefined ? updateRecipe(stateRecipe[0].recipe_id, ingredients, pasos, time): createRecipe(ingredients, pasos, time, id);}
+                                                {stateRecipe !== undefined ? updateRecipe(stateRecipe[0].recipe_id, ingredients, pasos, time): createRecipe(ingredients, pasos, time, id);}
                                                 nav('/meals');
                                             }
                                         }}>Registrar</button>

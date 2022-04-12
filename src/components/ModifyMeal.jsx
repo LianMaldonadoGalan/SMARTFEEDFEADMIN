@@ -23,7 +23,7 @@ const ModifyMeal = () => {
     const meal = state.find(m => m.id_meal.toString() === id );
 
     useEffect(() => {
-        getMeal(id);
+        //getMeal(id);
         
         setNombre(meal.meal_name);
         setDescrp(meal.meal_description);
@@ -41,7 +41,8 @@ const ModifyMeal = () => {
             console.log('veg');
             setVegetariano(true)
         };
-    }, []);
+    },[]);
+
 
     return(
         <main>
@@ -67,9 +68,9 @@ const ModifyMeal = () => {
                             <div className="form-group row">
                                 <label for="Tipo:" className="col-sm-3 col-form-label">Tipo</label>
                                 <div className="col">
-                                    <select class="form-control" id="Tipo">
-                                        <option selected={carnivoro}>Normal</option>
-                                        <option selected={vegetariano}>Vegetariano</option>
+                                    <select class="form-control" id="Tipo" onChange={event => setTipo(event.target.value)}>
+                                        <option selected={carnivoro} value="C">Normal</option>
+                                        <option selected={vegetariano} value="V">Vegetariano</option>
                                     </select>
                                 </div>
                             </div>
