@@ -17,9 +17,6 @@ const ModifyIngredient = () => {
         setNombre(ing.ingredient_name);
         setImagen(ing.ingredient_picture);
     }, []);
-    console.log(ing );
-    
-    
     
 
     return(

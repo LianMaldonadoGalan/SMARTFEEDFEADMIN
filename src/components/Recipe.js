@@ -26,9 +26,6 @@ const Recipe = () => {
         const x = JSON.parse(stateRecipe[0].meal_ingredients);
         x.map(b => {
             ingredientesReceta.push(stateIngredients.find(i => i.ingredient_id === b));
-            console.log(stateRecipe[0])
-            //console.log(ingredientesReceta);
-            //put(stateIngredients.find(i => i.ingredient_id === b));
         });
     }
     

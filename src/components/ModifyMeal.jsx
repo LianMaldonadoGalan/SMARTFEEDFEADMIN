@@ -23,8 +23,7 @@ const ModifyMeal = () => {
     const meal = state.find(m => m.id_meal.toString() === id );
 
     useEffect(() => {
-        //getMeal(id);
-        
+
         setNombre(meal.meal_name);
         setDescrp(meal.meal_description);
         setTipo(meal.meal_type);
