@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context as IngredientContext } from "../context/IngredientContext";
+import { Button } from "../styles/Button2";
+import { StyledForm, StyledFormWrapper, GlobalStyle } from "../styles/FormIngredients"
 
 const AddIngredient = () => {
     let navigate = useNavigate();
@@ -9,15 +11,20 @@ const AddIngredient = () => {
     const [ nombre, setNombre ] = useState("");
     const [ imagen, setImagen ] = useState("");
 
+
     return(
         <main>
+            <GlobalStyle />
+            <StyledFormWrapper>
+            <StyledForm>
             <div className="container-fluid">
-                <div  style={{ margin: 50 }}>
+                <div style={{ margin: 30 }}>
                     <div>
-                        <h1>Ingredientes</h1>
+                        <h1>Agregar Ingrediente:</h1>
+                        <br/><br/>
                         {/*form de los ingredientes*/}
                         <div  className="row">
-                            <div className="col" style={{backgroundColor: 'red'}}>
+                            <div >
                                 <div className="form-group row">
                                     <label for="Nombre:" className="col-sm-3 col-form-label">Nombre:</label>
                                     <div className="col">
@@ -32,20 +39,30 @@ const AddIngredient = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col" style={{backgroundColor: 'blue'}}>
-                                <button onClick={() => {
+                            <div style={{marginTop: 20}}>
+                                <Button style={{width: 150, height: 50, marginTop: 22, float: 'right'}} onClick={() => {
                                     const confirmacion = window.confirm('Seguro que quieres guardar?  ' + nombre);
                                     if(confirmacion){
                                         createIngredient(nombre, imagen);
                                         navigate('/ingredients')
                                     }
-                                }}>Registrar</button>
+                                }}>Registrar</Button>
+                                <Button onClick={() => {
+                                    const confirmacion = window.confirm('¿Seguro que quieres cancelar? se perderan los datos no guardados.')
+                                    if(confirmacion){
+                                        navigate('/ingredients')
+                                    }
+                                }} style={{width: 150, height: 50, marginTop: 22, float: 'right', backgroundColor: '#ff3838'}}>
+                                    Cancelar
+                                </Button>
                             </div>
                         </div>
                     </div>
                     
                 </div>
             </div>
+            </StyledForm>
+            </StyledFormWrapper>
         </main>
     )
 }

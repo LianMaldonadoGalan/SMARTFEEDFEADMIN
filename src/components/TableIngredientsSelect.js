@@ -1,4 +1,4 @@
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Context as SelectedIng } from "../context/SelectedIngContext";
@@ -56,10 +56,36 @@ export default function TableIngredientsSelect({titleTable, deReceta}) {
         (item) => 
         item.ingredient_name && item.ingredient_name.toLowerCase().includes(filterText.toLowerCase())
     );
+    const contextmsg = { singular: 'ingrediente', plural: 'ingredientes', message: 'seleccionado(s)' }
 
     useEffect(() => {
         fetchSelectedIng();
     }, []);
+
+    createTheme('smartfeed', {
+        text: {
+          primary: '#4a3503',
+          secondary: '#4a3503',
+        },
+        background: {
+          default: 'white',
+        },
+        context: {
+          background: '#ecffeb',
+          text: '#232423',
+        },
+        divider: {
+          default: '#e5e5e5',
+        },
+        action: {
+          button: 'rgba(0,0,0,.54)',
+          hover: 'rgba(0,0,0,.08)',
+          disabled: 'rgba(0,0,0,.12)',
+        },
+        striped: {
+            default: '#ecffeb',
+        },
+      });
 
     const subHeaderComponentMemo = React.useMemo(() => {
         const handleClear = () => {
@@ -108,6 +134,9 @@ export default function TableIngredientsSelect({titleTable, deReceta}) {
                         pointerOnHover
                         noTableHead
                         highlightOnHover
+                        theme={"smartfeed"}
+                        noDataComponent={"No hay ingredientes"}
+                        contextMessage={contextmsg}
                     />
                 <DataTable
                         title='Ingredientes seleccionados'
@@ -126,6 +155,9 @@ export default function TableIngredientsSelect({titleTable, deReceta}) {
                         pointerOnHover
                         noTableHead
                         disabled 
+                        theme={"smartfeed"}
+                        noDataComponent={"No hay ingredientes"}
+                        contextMessage={contextmsg}
                     />
                 </div>
             </div>

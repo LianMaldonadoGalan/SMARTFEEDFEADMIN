@@ -14,7 +14,7 @@ const Meals = () => {
 
     return (
         <Table 
-            titleTable='Platillos' 
+            titleTable='Platillos'
             addNewRoute='/add-meal'
             addNewText='Añadir platillo'
         />

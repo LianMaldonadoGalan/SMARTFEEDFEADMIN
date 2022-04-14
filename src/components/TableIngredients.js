@@ -1,25 +1,11 @@
-import DataTable from "react-data-table-component";
+import DataTable, { createTheme } from "react-data-table-component";
 import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import { Context as IngredientContext } from "../context/IngredientContext";
+import { TextField } from "../styles/TextField";
+import { Button } from "../styles/Button";
 
-const TextField = styled.input`
-  height: 32px;
-  width: 200px;
-  border-radius: 3px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border: 1px solid #e5e5e5;
-  padding: 0 32px 0 16px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`
 const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewText }) => (
   <>
     <TextField
@@ -30,14 +16,12 @@ const FilterComponent = ({ filterText, onFilter, onClear, addNewRoute, addNewTex
       value={filterText}
       onChange={onFilter}
     />
-    <button type="button" onClick={onClear} className='btn btn-dark'>
+    <Button type="button" onClick={onClear} className='btn btn-dark'>
       Limpiar
-    </button>
-    <Link to={addNewRoute} className='btn btn-dark'>{addNewText}</Link>
+    </Button>
+    <Link to={addNewRoute} ><Button type="button" >{addNewText}</Button></Link>
   </>
 );
-
-//() => window.alert(data.map(t => t.title))
 
 
 export default function Table({titleTable, addNewRoute, addNewText}) {
@@ -48,7 +32,7 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     );
     const [toggleCleared, setToggleCleared] = React.useState(false);
     const { state: ingredients, fetchIngredients, deleteIngredient } = useContext(IngredientContext);
-
+    const contextmsg = { singular: 'ingrediente', plural: 'ingredientes', message: 'seleccionado(s)' }
     let nav = useNavigate()
 
     //Definición de columnas
@@ -62,12 +46,12 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
           selector: (row) => row.ingredient_name
         },
         {		
-            cell: (row) => <button 
+            cell: (row) => <Button 
                     onClick={() => nav('/modify-ingredient/'+row.ingredient_id)}
                     className='btn btn-dark'
                 >
                     Modificar
-                </button>,
+                </Button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -77,8 +61,6 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
     useEffect(() => {
         fetchIngredients();
     }, []);
-
-    console.log(ingredients)
 
     const filteredItems = ingredients.filter(
         (item) =>
@@ -102,9 +84,9 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
               addNewRoute={addNewRoute}
               addNewText={addNewText}
             />  
-            <button type="button" onClick={fetchIngredients} className='btn btn-dark'>
+            <Button type="button" onClick={fetchIngredients} className='btn btn-dark'>
               Refrescar
-            </button>
+            </Button>
           </>
             
         );
@@ -126,11 +108,38 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
       };
 
       return (
-        <button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>
-          Delete
-        </button>
+        <Button key="delete" onClick={handleDelete} style={{ backgroundColor: 'red' }} icon>
+          Eliminar
+        </Button>
       );
 	}, [ingredients, selectedRows, toggleCleared]);
+
+  createTheme('smartfeed', {
+    text: {
+      primary: '#4a3503',
+      secondary: '#4a3503',
+    },
+    background: {
+      default: 'white',
+    },
+    context: {
+      background: '#ecffeb',
+      text: '#232423',
+      //position: 'absolute',
+      marginBottom: 50
+    },
+    divider: {
+      default: '#e5e5e5',
+    },
+    action: {
+      button: 'rgba(0,0,0,.54)',
+      hover: 'rgba(0,0,0,.08)',
+      disabled: 'rgba(0,0,0,.12)',
+    },
+    striped: {
+        default: '#ecffeb',
+    },
+  });
 
     return (
         <div>
@@ -153,8 +162,10 @@ export default function Table({titleTable, addNewRoute, addNewText}) {
               selectableRowsHighlight
               pointerOnHover
               highlightOnHover
+              theme="smartfeed"
+              noDataComponent={"No hay ingredientes"}
+              contextMessage={contextmsg}
           />
-          
         </div>
     );
 }
