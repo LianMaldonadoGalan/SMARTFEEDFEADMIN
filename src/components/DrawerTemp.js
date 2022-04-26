@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import { FiMenu } from "react-icons/fi";
+import { Button as Button2 } from "../styles/Button";
 
 
 const DrawerTemp = () => {
@@ -30,14 +31,15 @@ const DrawerTemp = () => {
       <div className='d-flex justify-content-center'>
         <img src={require('../images/logo.jfif')} width="200" height="200"/>
       </div>
-      <Divider />
+      
       <div className='d-flex justify-content-center'>
-        <Link to='/meals' className='btn btn-dark'>Meals</Link>
+        <Link to='/meals' ><Button2 type="button" style={{marginBottom: 10, width: 245}}>Platillos</Button2></Link>
       </div>
       <Divider />
       <div className='d-flex justify-content-center'>
-        <Link to='/ingredients' className='btn btn-dark'>Ingredients</Link>
+        <Link to='/ingredients' ><Button2 type="button" style={{marginTop: 10, width: 245} }>Ingredientes</Button2></Link>
       </div>
+      
       </Box>
   );
 
@@ -46,12 +48,13 @@ const DrawerTemp = () => {
       {['Abrir'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>
-            <FiMenu size={30}/>
+            <FiMenu size={30} color={'#1f1809'}/>
           </Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
+            color="#f1fff0"
           >
             {list(anchor)}
           </Drawer>

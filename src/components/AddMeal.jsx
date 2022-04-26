@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Button } from "../styles/Button2";
 import { Context as MealContext } from "../context/MealContext"
+import { StyledForm, StyledFormWrapper, GlobalStyle } from "../styles/Form"
 
 const AddMeal = () => {
     let navigate = useNavigate();
@@ -14,14 +16,18 @@ const AddMeal = () => {
     const [ grasas, setGrasas ] = useState(0);
     const [ imagen, setImagen ] = useState("");
     const { createMeal } = useContext(MealContext);
-    
+
     return(
         <main>
-            <div className="container-fluid">
-                <div className="row" style={{ margin: 50, backgroundColor: 'aqua'}}>
+            <GlobalStyle />
+            <StyledFormWrapper>
+            <StyledForm>
+                <div className="row" style={{ marginTop: 25, marginLeft: 10, marginRight: 15, marginBottom: 10}}>
                 <div className="col">
-                        <h1>Platillos</h1>
+                        <h1>Agregar platillo:</h1>
+                        <br/>
                         <form>
+                        <br/>
                             <div className="form-group row">
                                 <label for="Nombre:" className="col-sm-3 col-form-label">Nombre</label>
                                 <div className="col">
@@ -90,13 +96,13 @@ const AddMeal = () => {
                             </div>
                         </form>
                     </div>
-                    <div className="col" style={{backgroundColor: 'gray'}}>
+                    {/*<div className="col" style={{backgroundColor: 'gray'}}>*/}
                         <div className="container">
                             {/*<TableIngredientsSelect titleTable='Ingredientes'/>*/}
                         </div>
                         <div className="row">
-                            <div className="d-flex justify-content-center">
-                                <button 
+                            <div >
+                                <Button 
                                     onClick={() => {
                                         if(tipo===""){
                                             alert('Selecciona que tipo de platillo es.')
@@ -108,15 +114,23 @@ const AddMeal = () => {
                                                 navigate('/meals')
                                             }
                                         }
-                                }} style={{width: 150, height:80}}>
+                                }} style={{width: 150, height: 50, marginTop: 22, float: 'right'}}>
                                     Registrar
-                                </button>
+                                </Button>
+                                <Button onClick={() => {
+                                    const confirmacion = window.confirm('¿Seguro que quieres cancelar? se perderan los datos no guardados.')
+                                    if(confirmacion){
+                                        navigate('/meals')
+                                    }
+                                }} style={{width: 150, height: 50, marginTop: 22, float: 'right', backgroundColor: '#ff3838'}}>
+                                    Cancelar
+                                </Button>
                             </div>
-                        </div>
-                        
+                        {/*</div>*/}
                     </div>
                 </div>
-            </div>
+            </StyledForm>
+            </StyledFormWrapper>
         </main>
     )
 }
