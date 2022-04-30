@@ -13,7 +13,7 @@ const mealReducer = (state, action) => {
 };
 
 const fetchMeals = dispatch => async () => {
-    const response = await smartFeed.get('/meals');
+    const response = await smartFeed.get('/meals?limit=500&page=0');
     dispatch({ type: 'fetch_meals', payload: response.data.data });
 };
   

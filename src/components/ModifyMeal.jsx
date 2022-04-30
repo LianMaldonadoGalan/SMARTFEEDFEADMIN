@@ -82,35 +82,50 @@ const ModifyMeal = () => {
                             <div className="form-group row">
                                 <label for="Costo" className="col-sm-3 col-form-label">Costo</label>
                                 <div className="col">
-                                    <input type="number" value={costo} class="form-control" id="Costo" onChange={event => setCosto(event.target.value)}/>
+                                    <input type="number" min={0} 
+                                     onkeyup="if(this.value<0){this.value= this.value * -1}"
+                                     value={costo} class="form-control" 
+                                     id="Costo" onChange={event => setCosto(event.target.value)}/>
                                 </div>
                             </div>
                             <br />
                             <div className="form-group row">
                                 <label for="Proteinas" className="col-sm-3 col-form-label">Proteinas</label>
                                 <div className="col">
-                                    <input type="number" value={proteinas} class="form-control" id="Proteinas" onChange={event => setProteinas(event.target.value)}/>
+                                    <input type="number" 
+                                    onkeyup="if(this.value<0){this.value= this.value * -1}"
+                                    value={proteinas} class="form-control" 
+                                    id="Proteinas" onChange={event => setProteinas(event.target.value)}/>
                                 </div>
                             </div>
                             <br />
                             <div className="form-group row">
                                 <label for="Calorias"className="col-sm-3 col-form-label">Calorias</label>
                                 <div className="col">
-                                    <input type="number" value={calorias} class="form-control" id="Calorias" onChange={event => setCalorias(event.target.value)}/>
+                                    <input type="number" 
+                                    onkeyup="if(this.value<0){this.value= this.value * -1}"
+                                    value={calorias} class="form-control" 
+                                    id="Calorias" onChange={event => setCalorias(event.target.value)}/>
                                 </div>
                             </div>
                             <br />
                             <div className="form-group row">
                                 <label for="Carbohidratos"  className="col-sm-3 col-form-label">Carbohidratos</label>
                                 <div className="col">
-                                    <input type="number" value={carbohi} class="form-control" id="Carbohidratos" onChange={event => setCarbohi(event.target.value)}/>
+                                    <input type="number"
+                                    onkeyup="if(this.value<0){this.value= this.value * -1}"
+                                    value={carbohi} class="form-control" 
+                                    id="Carbohidratos" onChange={event => setCarbohi(event.target.value)}/>
                                 </div>
                             </div>
                             <br />
                             <div className="form-group row">
                                 <label for="Grasas" className="col-sm-3 col-form-label">Grasas</label>
                                 <div className="col">
-                                    <input type="number" value={grasas} class="form-control" id="Grasas" onChange={event => setGrasas(event.target.value)}/>
+                                    <input type="number"
+                                    onkeyup="if(this.value<0){this.value= this.value * -1}" 
+                                    value={grasas} class="form-control"
+                                    id="Grasas" onChange={event => setGrasas(event.target.value)}/>
                                 </div>
                             </div>
                             <br />

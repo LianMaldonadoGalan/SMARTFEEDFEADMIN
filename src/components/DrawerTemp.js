@@ -6,9 +6,10 @@ import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import { FiMenu } from "react-icons/fi";
 import { Button as Button2 } from "../styles/Button";
+import { FaRegWindowClose } from "react-icons/fa";
 
 
-const DrawerTemp = () => {
+const DrawerTemp = ({ logout, user }) => {
   const [state, setState] = React.useState({
     left: false,
   });
@@ -39,13 +40,16 @@ const DrawerTemp = () => {
       <div className='d-flex justify-content-center'>
         <Link to='/ingredients' ><Button2 type="button" style={{marginTop: 10, width: 245} }>Ingredientes</Button2></Link>
       </div>
+      <div className='d-flex justify-content-center'>
+        <Button onClick={logout} type="button" color="error" style={{marginTop: 275, width: 245}} variant="contained" endIcon={<FaRegWindowClose />}>Cerrar Sesion</Button>
+      </div>
       
       </Box>
   );
 
   return (
     <div>
-      {['Abrir'].map((anchor) => (
+      {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>
             <FiMenu size={30} color={'#1f1809'}/>

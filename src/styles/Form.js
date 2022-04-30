@@ -14,18 +14,18 @@ export const StyledFormWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 140vh;
+    height: 155vh;
     padding: 0 20px;
 `;
 
 export const GlobalStyle = createGlobalStyle`
     html {
-        height: 150%
+        height: 170%
     }
     body {
         font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(to bottom, #ecffeb, #fcfce8);
-        height: 100%;
+        background: linear-gradient(to bottom,  #ecffeb, #74cc74);
+        height: 90%;
         margin: 0;
         color: #555;
     }

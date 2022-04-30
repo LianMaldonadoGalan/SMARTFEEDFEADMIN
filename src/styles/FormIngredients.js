@@ -24,7 +24,7 @@ html {
 }
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #ecffeb, #fcfce8);
+    background: linear-gradient(to bottom, #ecffeb, #74cc74);
     height: 100%;
     margin: 0;
     color: #555;
