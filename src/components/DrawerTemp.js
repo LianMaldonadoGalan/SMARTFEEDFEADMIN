@@ -9,7 +9,7 @@ import { Button as Button2 } from "../styles/Button";
 import { FaRegWindowClose } from "react-icons/fa";
 
 
-const DrawerTemp = ({ logout, user }) => {
+const DrawerTemp = ({ logout }) => {
   const [state, setState] = React.useState({
     left: false,
   });
@@ -41,7 +41,7 @@ const DrawerTemp = ({ logout, user }) => {
         <Link to='/ingredients' ><Button2 type="button" style={{marginTop: 10, width: 245} }>Ingredientes</Button2></Link>
       </div>
       <div className='d-flex justify-content-center'>
-        <Button onClick={logout} type="button" color="error" style={{marginTop: 275, width: 245}} variant="contained" endIcon={<FaRegWindowClose />}>Cerrar Sesion</Button>
+        <Button onClick={logout} type="button" color="error" style={{marginTop: 340, width: 245}} variant="contained" endIcon={<FaRegWindowClose />}>Cerrar Sesion</Button>
       </div>
       
       </Box>

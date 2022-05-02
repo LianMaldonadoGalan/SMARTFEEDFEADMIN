@@ -149,7 +149,7 @@ const ModifyMeal = () => {
                                             nav('/meals')
                                         }
                                 }} style={{width: 150, height: 50, marginTop: 22, float: 'right'}}>
-                                    Registrar
+                                    Guardar
                                 </Button>
                                 <Button onClick={() => {
                                     const confirmacion = window.confirm('¿Seguro que quieres cancelar? se perderan los datos no guardados.')

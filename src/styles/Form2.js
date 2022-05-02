@@ -14,13 +14,13 @@ export const StyledFormWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 160vh;
+    height: 180vh;
     padding: 0 20px;
 `;
 
 export const GlobalStyle = createGlobalStyle`
     html {
-        height: 170%
+        height: 200%
     }
     body {
         font-family: Arial, Helvetica, sans-serif;

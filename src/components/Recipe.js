@@ -14,6 +14,9 @@ const Recipe = () => {
     const params = useParams();
     const id = params.id;
     const nombrePlatillo = params.nombre;
+    const [resetPaginationToggle, setResetPaginationToggle] = useState(
+        false
+    );
     const { state: selectedIngredients, putIngredients} = useContext(SelectedIng);
     const { state: stateRecipe, createRecipe, updateRecipe} = useContext(RecipeContext);
     const { state: stateIngredients } = useContext(IngredientsContext);
@@ -23,6 +26,7 @@ const Recipe = () => {
     let ingredients;
     let time;
     let ingredientesReceta = [];
+
 
     if(stateRecipe !== undefined){
         const x = JSON.parse(stateRecipe[0].meal_ingredients);
@@ -95,6 +99,9 @@ const Recipe = () => {
                                         title='Ingredientes actuales de la receta'
                                         columns={columns}
                                         data={ingredientesReceta}
+                                        pagination
+                                        paginationResetDefaultPage={resetPaginationToggle}
+                                        paginationPerPage={5}
                                         
                                     />
                                 </div>
