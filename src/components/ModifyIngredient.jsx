@@ -56,7 +56,7 @@ const ModifyIngredient = () => {
                                         patchIngredient(id, nombre, imagen)
                                         nav('/ingredients')
                                     }
-                                }}>Registrar</Button>
+                                }}>Guardar</Button>
                                 <Button onClick={() => {
                                     const confirmacion = window.confirm('¿Seguro que quieres cancelar? se perderan los datos no guardados.')
                                     if(confirmacion){

@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
     "baseui": "^10.8.0",
+    "crypto-es": "^1.2.7",
     "feather-icons": "^4.28.0",
     "lodash.differenceby": "^4.8.0",
     "react": "^17.0.2",

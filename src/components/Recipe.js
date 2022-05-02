@@ -14,6 +14,9 @@ const Recipe = () => {
     const params = useParams();
     const id = params.id;
     const nombrePlatillo = params.nombre;
+    const [resetPaginationToggle, setResetPaginationToggle] = useState(
+        false
+    );
     const { state: selectedIngredients, putIngredients} = useContext(SelectedIng);
     const { state: stateRecipe, createRecipe, updateRecipe} = useContext(RecipeContext);
     const { state: stateIngredients } = useContext(IngredientsContext);
@@ -23,6 +26,7 @@ const Recipe = () => {
     let ingredients;
     let time;
     let ingredientesReceta = [];
+
 
     if(stateRecipe !== undefined){
         const x = JSON.parse(stateRecipe[0].meal_ingredients);
@@ -70,7 +74,11 @@ const Recipe = () => {
                                 <div className="form-group row">
                                     <label for="Tiempo" className="col-sm-3 col-form-label">Tiempo de preparación:</label>
                                     <div className="col-sm-2">
-                                        <input style={{marginTop: 12}} type='number' class="form-control" value={tiempo} id="Tiempo" onChange={event => setTiempo(event.target.value)}/>
+                                        <input style={{marginTop: 12}}
+                                        type='number'
+                                        min={0} 
+                                        onkeyup="if(this.value<0){this.value= this.value * -1}"
+                                        value={tiempo} class="form-control" id="Tiempo" onChange={event => setTiempo(event.target.value)}/>
                                     </div>
                                     <div className="col-sm" style={{marginTop: 17}}>
                                         <span  >minutos.</span>
@@ -91,6 +99,9 @@ const Recipe = () => {
                                         title='Ingredientes actuales de la receta'
                                         columns={columns}
                                         data={ingredientesReceta}
+                                        pagination
+                                        paginationResetDefaultPage={resetPaginationToggle}
+                                        paginationPerPage={5}
                                         
                                     />
                                 </div>
